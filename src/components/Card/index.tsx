@@ -5,30 +5,6 @@ import { IData } from "../../services/types";
 
 import { styles } from "./styles";
 
-const Sound = require("react-native-sound");
-
-Sound.setCategory("Playback");
-
-Sound.setCategory("Playback");
-
-var audio = new Sound(
-  "https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3",
-  null,
-  (error: any) => {
-    if (error) {
-      console.log("failed to load the sound", error);
-      return;
-    }
-    // if loaded successfully
-    console.log(
-      "duration in seconds: " +
-        audio.getDuration() +
-        "number of channels: " +
-        audio.getNumberOfChannels()
-    );
-  }
-);
-
 const Card: React.FC<IData> = ({
   id,
   title,
