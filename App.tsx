@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StatusBar, Text, View } from "react-native";
+import Bg from "./assets/bg.webp";
+import Layout from "./src/components/Layout";
+import { TextProvider } from "./src/context";
+import { DataProvider } from "./src/context/datas";
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://deezer-heroku-deployment.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApolloProvider client={client}>
+      <DataProvider>
+        <TextProvider>
+          <View style={{ flex: 1 }}>
+            <StatusBar animated={true} />
+            <ImageBackground source={Bg} resizeMode="cover" style={{ flex: 1 }}>
+              <Layout />
+            </ImageBackground>
+          </View>
+        </TextProvider>
+      </DataProvider>
+    </ApolloProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
