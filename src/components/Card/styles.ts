@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
   },
 
+  content: {
+    marginLeft: 40,
+  },
+
   text: {
     color: style_global.colors.text.white,
   },
@@ -29,7 +33,9 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
 
-  content: {
-    marginLeft: 40,
+  button_song: {
+    marginTop: 20,
+    fontSize: 20,
+    color: style_global.colors.text.blue,
   },
 });

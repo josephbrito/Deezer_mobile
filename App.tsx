@@ -1,4 +1,4 @@
-import { ImageBackground, StatusBar, Text, View } from "react-native";
+import { ImageBackground, StatusBar, View } from "react-native";
 import Bg from "./assets/bg.webp";
 import Layout from "./src/components/Layout";
 import { TextProvider } from "./src/context";

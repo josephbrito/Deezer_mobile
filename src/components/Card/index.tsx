@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Button, Image, Pressable, Text, View } from "react-native";
 import { Audio } from "expo-av";
 
 import { IData } from "../../services/types";
@@ -15,36 +15,53 @@ const Card: React.FC<IData> = ({
   artist,
   duration,
 }: IData) => {
-  const [song, setSong] = useState<any>();
+  const [sound, setSound] = useState<any>();
 
-  const playSong = async () => {
-    const { sound: playbackObject } = await Audio.Sound.createAsync(
+  const playSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
       { uri: preview },
-      { shouldPlay: true }
+      { shouldPlay: false }
     );
-    setSong(playbackObject);
-    await playbackObject.unloadAsync();
+    setSound(sound);
+
+    await sound.playAsync();
+  };
+
+  const stopSong = async () => {
+    await sound.stopAsync();
+    setSound(null);
   };
 
   useEffect(() => {
-    return song
+    return sound
       ? () => {
-          console.log("Unloading Sound");
-          song.unloadAsync();
+          sound.unloadAsync();
         }
       : undefined;
-  }, [song]);
+  }, [sound]);
 
   return (
-    <Pressable onPress={() => playSong()}>
+    <View>
       <View style={styles.container}>
         <Image source={{ uri: album.cover_big }} style={styles.image} />
         <View style={styles.content}>
           <Text style={[styles.text, styles.name_artist]}>{artist.name}</Text>
           <Text style={[styles.text, styles.name_song]}>{title}</Text>
+
+          <Pressable onPress={sound ? stopSong : playSound}>
+            <Text
+              style={[
+                styles.text,
+                styles.button_song,
+                sound ? { color: "#FE5F55" } : { color: "#6B9AC4" },
+              ]}
+            >
+              {sound ? "Stop" : "Play"}
+            </Text>
+          </Pressable>
         </View>
       </View>
-    </Pressable>
+    </View>
   );
 };
 
